@@ -40,6 +40,6 @@ export default async function Page({
     }
 
     return (
-        <ProductItem product={product} />
+        <ProductItem product={product} size='full' />
     );
 }

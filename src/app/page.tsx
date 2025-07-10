@@ -13,6 +13,7 @@ async function Products() {
             <Link href={`/products/${product.id}`} key={product.id}>
                 <ProductItem
                     product={product}
+                    size='small'
                 />
             </Link>
         );
