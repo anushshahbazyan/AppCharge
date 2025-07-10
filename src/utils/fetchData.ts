@@ -3,7 +3,7 @@ import { BASE_API } from '../constants/api';
 
 const fetchData = cache(async (url_route = '') => {
     const route = url_route ?
-        BASE_API.slice(BASE_API.lastIndexOf('?')) + '/' + url_route :
+        BASE_API.slice(0, BASE_API.lastIndexOf('?')) + '/' + url_route :
         BASE_API;
 
     try {
@@ -17,7 +17,7 @@ const fetchData = cache(async (url_route = '') => {
         return data;
     } catch(e) {
         console.error(e);
-        return [];
+        return '';
     }
 });
 
