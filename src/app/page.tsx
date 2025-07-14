@@ -1,31 +1,17 @@
-import Link from 'next/link';
-
-import fetchData from '../utils/fetchData';
-import { Product } from '../utils/types';
-import ProductItem from '../components/product-item';
 import { Suspense } from 'react';
-
-async function Products() {
-    const products: Product[] = await fetchData();
-
-    return products.map((product: Product) => {
-        return (
-            <Link href={`/products/${product.id}`} key={product.id}>
-                <ProductItem
-                    product={product}
-                    size='small'
-                />
-            </Link>
-        );
-    });
-}
+import ErrorBoundary from '../components/error-boundary';
+import Products from '../components/products-list';
 
 export default async function Page() {
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 p-6'>
-            <Suspense fallback={<div>Loading...</div>}>
-                <Products />
-            </Suspense>
-        </div>
+        <main>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 p-6'>
+                <ErrorBoundary fallback={<h2>Something went wrong!</h2>}>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Products />
+                    </Suspense>
+                </ErrorBoundary>
+            </div>
+        </main>
     );
 };

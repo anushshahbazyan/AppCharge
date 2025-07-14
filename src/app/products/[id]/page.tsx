@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import fetchData from '../../../utils/fetchData';
 import ProductItem from '../../../components/product-item';
 import { Product } from '../../../utils/types';
-import NotFound from './not-found';
+import { notFound } from 'next/navigation';
 
 type Params = {
     params: Promise<{ id: number }>
@@ -36,10 +36,12 @@ export default async function Page({
     const product = await fetchData(id + '');
 
     if (!product) {
-        return <NotFound />;
+        notFound();
     }
 
     return (
-        <ProductItem product={product} size='full' />
+        <main>
+            <ProductItem product={product} size='full' />
+        </main>
     );
 }
