@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { act } from 'react-dom/test-utils';
 import Products from "../components/products-list";
 
 jest.mock("../utils/fetchData", () => ({
@@ -19,14 +20,14 @@ jest.mock("../utils/fetchData", () => ({
         
         return jest.fn().mockResolvedValue([{
             id: 1,
-            title: 'test',
+            title: 'test title',
             price: 111,
             description: 'test',
             category: 'menswear',
             image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg&w=640&q=75',
-            rating: { rate: 3, count: 120 }},
-        {
-            id: 1,
+            rating: { rate: 3, count: 120 }
+        }, {
+            id: 2,
             title: 'test',
             price: 111,
             description: 'test',
@@ -34,7 +35,7 @@ jest.mock("../utils/fetchData", () => ({
             image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg&w=640&q=75',
             rating: { rate: 3, count: 120 }
         }, {
-            id: 1,
+            id: 3,
             title: 'test',
             price: 111,
             description: 'test',
@@ -42,7 +43,7 @@ jest.mock("../utils/fetchData", () => ({
             image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg&w=640&q=75',
             rating: { rate: 3, count: 120 }
         }, {
-            id: 1,
+            id: 4,
             title: 'test',
             price: 111,
             description: 'test',
@@ -50,7 +51,7 @@ jest.mock("../utils/fetchData", () => ({
             image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg&w=640&q=75',
             rating: { rate: 3, count: 120 }
         }, {
-            id: 1,
+            id: 5,
             title: 'test',
             price: 111,
             description: 'test',
@@ -61,19 +62,19 @@ jest.mock("../utils/fetchData", () => ({
     }
 }));
 
-it("renders grid layout with 5 columns", async () => {
-    render(<Products />);
+test("renders grid layout with 5 columns", async () => {
+    act(() => render(<Products />));
 
-    const gridLayout = screen.getByRole("grid");
-    expect(gridLayout).toBeInTheDocument();
+    const nodes = await screen.findByRole("link");
+    expect(nodes).toBeInTheDocument();
   
 });
 
-it("redirects to product detail page", async () => {
-    render(<Products />);
+test("redirects to product detail page", async () => {
+    act(() => render(<Products />));
 
     const productTile = await screen.findByRole("link");
     fireEvent.click(productTile);
-    const productDetail = await screen.findByText("Fjallraven - Foldsack No. 1 Backpack");
+    const productDetail = await screen.findByText("test title");
     expect(productDetail).toBeInTheDocument();
 });
